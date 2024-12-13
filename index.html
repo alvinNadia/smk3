@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SMK</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f7f9fc;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #1e73be;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            overflow-y: auto;
+        }
+
+        .sidebar h1 {
+            font-size: 18px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .sidebar img {
+            display: block;
+            margin: 0 auto 10px;
+            width: 60px;
+            height: 60px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar li {
+            padding: 15px;
+            cursor: pointer;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .sidebar li i {
+            margin-right: 10px;
+        }
+
+        .sidebar li:hover {
+            background-color: #145a86;
+        }
+
+        .submenu {
+            display: none;
+            background-color: #145a86;
+        }
+
+        .submenu li {
+            padding-left: 30px;
+        }
+
+        .submenu li:hover {
+            background-color: #0f3d5e;
+        }
+
+        .menu-title {
+            padding: 10px 15px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #b0d4f1;
+        }
+
+        /* Main content */
+        .main-container {
+            margin-left: 250px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .map-container {
+            flex: 1;
+            height: 400px;
+            background-color: #eaeaea;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .dashboard-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stat-card {
+            flex: 1 1 calc(33.33% - 20px);
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            margin: 0 0 10px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .stat-card p {
+            margin: 0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .progress-container {
+            margin-top: 10px;
+        }
+
+        .progress-bar {
+            background-color: #1e73be;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .progress-track {
+            background-color: #eaeaea;
+            height: 8px;
+            border-radius: 4px;
+        }
+
+        .schedule {
+            width: 100%;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+
+        .schedule h3 {
+            margin: 0 0 20px;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .schedule table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .schedule th, .schedule td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #eaeaea;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .schedule th {
+            background-color: #f7f9fc;
+            font-weight: bold;
+        }
+        .logo{
+            width: 100px;
+            height: 100px;
+        }
+
+        @media (max-width: 768px) {
+            .stat-card {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img class="logo" src="smk31.png" alt="Logo">
+        <h1>SMK N 3 Pariaman</h1>
+        <ul>
+            <li class="menu-title">User</li>
+            <li><i class="icon">🏠</i>Halaman Utama</li>
+            <li><i class="icon">👤</i>Profil</li>
+
+            <li class="menu-title">Data</li>
+            <li id="data-master"><i class="icon">📊</i>Data Master</li>
+            <ul class="submenu" id="data-master-submenu">
+                <li>Data Siswa</li>
+                <li>Data Guru</li>
+                <li>Data Industri</li>
+                <li>Data Penempatan</li>
+            </ul>
+
+            <li class="menu-title">Aktivitas</li>
+            <li><i class="icon">📋</i>Kelola Menu</li>
+            <li><i class="icon">📥</i>Pengajuan Siswa</li>
+            <li><i class="icon">📝</i>Tugas</li>
+            <li><i class="icon">🔍</i>Penentuan Penguji</li>
+
+            <li class="menu-title">Laporan</li>
+            <li><i class="icon">📑</i>Kunjungan</li>
+            <li><i class="icon">📑</i>Laporan Nilai</li>
+
+            <li class="menu-title">Sistem</li>
+            <li><i class="icon">🚪</i>Keluar</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="map-container" id="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d253840.49131652396!2d106.6647042523942!3d-6.229720928662839!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f3e945e34b9d%3A0x5371bf0fdad786a2!2sJakarta!5e0!3m2!1sen!2sid!4v1734106987950!5m2!1sen!2sid" width="1400" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Jumlah Siswa Terdaftar</h3>
+                <p>20 orang</p>
+            </div>
+            <div class="stat-card">
+                <h3>Jumlah Guru Pembimbing</h3>
+                <p>18 orang</p>
+            </div>
+            <div class="stat-card">
+                <h3>Jumlah Industri Terdaftar</h3>
+                <p>18 lokasi</p>
+            </div>
+            <div class="stat-card">
+                <h3>di Industri Siswa yang Sudah Diterima</h3>
+                <p>6/20 orang</p>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div class="progress-bar" style="width: 30%;"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <h3>Industri yang Menerima Siswa PKL</h3>
+                <p>6/18 lokasi</p>
+                <div class="progress-container">
+                    <div class="progress-track">
+                        <div class="progress-bar" style="width: 33%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="schedule">
+            <h3>Jadwal Kegiatan</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Kegiatan</th>
+                        <th>Tanggal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Registrasi/ Pendaftaran</td>
+                        <td>2024-12-01 - 2025-02-28</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Pencarian Lokasi</td>
+                        <td>2024-12-01 - 2025-02-28</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Pelaksanaan PKL</td>
+                        <td>2024-12-01 - 2025-06-28</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Sidang/ Pengujian</td>
+                        <td>2025-06-01 - 2025-09-28</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const dataMaster = document.getElementById('data-master');
+        const dataMasterSubmenu = document.getElementById('data-master-submenu');
+
+        dataMaster.addEventListener('click', () => {
+            dataMasterSubmenu.style.display = dataMasterSubmenu.style.display === 'block' ? 'none' : 'block';
+        });
+    </script>
+</body>
+</html>
